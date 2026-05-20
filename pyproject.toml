@@ -54,7 +54,33 @@ local_scheme = "no-local-version"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-extend-exclude = ["build", "dist", ".venv"]
+# Scope strict lint to new code. Each entry below is upstream-inherited and
+# will be re-enabled in a dedicated cleanup PR (see REPORT.md).
+extend-exclude = [
+    "build",
+    "dist",
+    ".venv",
+    # Upstream-inherited Python sources (pre-existing lint debt).
+    "src/gemini_webapi/client.py",
+    "src/gemini_webapi/components/chat_mixin.py",
+    "src/gemini_webapi/components/gem_mixin.py",
+    "src/gemini_webapi/components/research_mixin.py",
+    "src/gemini_webapi/types/availablemodel.py",
+    "src/gemini_webapi/types/candidate.py",
+    "src/gemini_webapi/types/chathistory.py",
+    "src/gemini_webapi/types/modeloutput.py",
+    "src/gemini_webapi/utils/decorators.py",
+    "src/gemini_webapi/utils/get_access_token.py",
+    "src/gemini_webapi/utils/logger.py",
+    "src/gemini_webapi/utils/rotate_1psidts.py",
+    "src/gemini_webapi/utils/upload_file.py",
+    # Upstream live-only integration tests (the new offline suite lives in tests/unit/).
+    "tests/test_cli.py",
+    "tests/test_client_features.py",
+    "tests/test_deep_research.py",
+    "tests/test_gem_mixin.py",
+    "tests/test_save_image.py",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP"]
@@ -66,6 +92,27 @@ ignore = [
 [tool.black]
 line-length = 100
 target-version = ["py311", "py312", "py313"]
+extend-exclude = '''
+(
+    # Upstream-inherited; will be reformatted in a dedicated cleanup PR.
+    ^/src/gemini_webapi/client\.py
+  | ^/src/gemini_webapi/components/.*\.py
+  | ^/src/gemini_webapi/types/availablemodel\.py
+  | ^/src/gemini_webapi/types/candidate\.py
+  | ^/src/gemini_webapi/types/chathistory\.py
+  | ^/src/gemini_webapi/types/modeloutput\.py
+  | ^/src/gemini_webapi/utils/decorators\.py
+  | ^/src/gemini_webapi/utils/get_access_token\.py
+  | ^/src/gemini_webapi/utils/logger\.py
+  | ^/src/gemini_webapi/utils/rotate_1psidts\.py
+  | ^/src/gemini_webapi/utils/upload_file\.py
+  | ^/tests/test_cli\.py
+  | ^/tests/test_client_features\.py
+  | ^/tests/test_deep_research\.py
+  | ^/tests/test_gem_mixin\.py
+  | ^/tests/test_save_image\.py
+)
+'''
 
 [tool.pyright]
 include = ["src"]
