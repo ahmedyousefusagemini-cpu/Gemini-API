@@ -24,7 +24,7 @@ captured on 2026-05-20 from `gemini.google.com`.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 __all__ = [
