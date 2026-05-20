@@ -4,6 +4,14 @@ from .decorators import running
 from .get_access_token import get_access_token
 from .load_browser_cookies import load_browser_cookies
 from .logger import logger, set_log_level
+from .model_discovery import (
+    ParsedMode,
+    ParsedUserStatus,
+    ThinkingLevelSpec,
+    build_alias_map,
+    parse_otaq7b_response,
+    resolve_alias,
+)
 from .parsing import (
     extract_json_from_response,
     get_delta_by_fp_len,
