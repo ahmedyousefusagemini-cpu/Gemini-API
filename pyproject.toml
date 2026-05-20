@@ -17,6 +17,7 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
 requires-python = ">=3.10"
 dependencies = [
@@ -29,15 +30,55 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 browser = ["browser-cookie3"]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.6",
+    "black>=24.10",
+    "pyright>=1.1.380",
+]
 
 [project.urls]
-Repository = "https://github.com/HanaokaYuzu/Gemini-API"
-Issues = "https://github.com/HanaokaYuzu/Gemini-API/issues"
+Repository = "https://github.com/ahmedyousefusagemini-cpu/Gemini-API"
+Issues = "https://github.com/ahmedyousefusagemini-cpu/Gemini-API/issues"
+Upstream = "https://github.com/HanaokaYuzu/Gemini-API"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["gemini_webapi"]
+include = ["gemini_webapi*"]
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
 local_scheme = "no-local-version"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["build", "dist", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = [
+    "E501",
+    "B008",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311", "py312", "py313"]
+
+[tool.pyright]
+include = ["src"]
+exclude = ["**/__pycache__", "build", "dist", ".venv"]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+reportMissingTypeStubs = false
+reportPrivateImportUsage = false
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "live: marks tests that require live Gemini credentials and network access (deselect with -m 'not live')",
+]
